@@ -82,7 +82,7 @@ const getLinks = async (req, res) => {
 // Insert or update a single link
 const insertOrUpdateLink = async (req, res) => {
   try {
-    const { id, linkname, link, linktype } = req.body;
+    const { id, linkname, link, linktype, displayorder } = req.body;
 
     // Validate required fields
     if (linkname === undefined || link === undefined || linktype === undefined || id === undefined) {
@@ -106,26 +106,27 @@ const insertOrUpdateLink = async (req, res) => {
     // Determine operation based on ID value
     // id = 0 means INSERT, id > 0 means UPDATE
     const operation = (id === 0 || id === '0') ? 'I' : 'U';
-    const linkId = parseInt(id);
+    const linkId = operation === 'I' ? null : parseInt(id);
 
-    // Call the stored procedure
-    await sequelize.query(
-      'CALL "PC_DashboardLinks_InsertDelete"(:operation, :id, :linkname, :link, :linktype)',
+    // Call the updated stored function
+    const result = await sequelize.query(
+      'SELECT "PC_InsertUpdateDashboardLinks"(:operation, :id, :linkname, :link, :linktype, :displayorder) as message',
       {
         replacements: {
           operation,
           id: linkId,
           linkname,
           link,
-          linktype
+          linktype,
+          displayorder: displayorder ? parseInt(displayorder) : null
         },
-        type: sequelize.QueryTypes.RAW
+        type: sequelize.QueryTypes.SELECT
       }
     );
 
     res.status(200).json({
       success: true,
-      message: operation === 'I' ? 'Link created successfully' : 'Link updated successfully',
+      message: result[0]?.message || (operation === 'I' ? 'Link created successfully' : 'Link updated successfully'),
       data: {
         action: operation === 'I' ? 'created' : 'updated',
         link: {
@@ -197,21 +198,21 @@ const deleteLink = async (req, res) => {
     const { getSequelize } = await import('../config/database.js');
     const sequelize = getSequelize();
 
-    // Call the stored procedure for delete
-    await sequelize.query(
-      'CALL "PC_DashboardLinks_InsertDelete"(:operation, :id, null, null, null)',
+    // Call the updated stored function for delete
+    const result = await sequelize.query(
+      'SELECT "PC_InsertUpdateDashboardLinks"(:operation, :id, null, null, null, null) as message',
       {
         replacements: {
           operation: 'D',
           id: parseInt(id)
         },
-        type: sequelize.QueryTypes.RAW
+        type: sequelize.QueryTypes.SELECT
       }
     );
 
     res.status(200).json({
       success: true,
-      message: 'Link deleted successfully'
+      message: result[0]?.message || 'Link deleted successfully'
     });
   } catch (error) {
     console.error('Delete link error:', error);

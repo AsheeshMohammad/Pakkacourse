@@ -21,6 +21,7 @@ const startServer = async () => {
   // Import routes after database connection
   const authRoutes = await import('./routes/auth.js');
   const linkRoutes = await import('./routes/links.js');
+  const logRoutes = await import('./routes/logRoutes.js');
 
   // Security middleware
   app.use(helmet({
@@ -45,7 +46,7 @@ const startServer = async () => {
   // Rate limiting
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
+    max: 1000, // limit each IP to 100 requests per windowMs
     message: {
       success: false,
       message: 'Too many requests from this IP, please try again later.'
@@ -112,6 +113,7 @@ const startServer = async () => {
   // API routes
   app.use('/api/auth', authRoutes.default);
   app.use('/api/links', linkRoutes.default);
+  app.use('/api/logs', logRoutes.default);
 
   // Root endpoint
   app.get('/', (req, res) => {

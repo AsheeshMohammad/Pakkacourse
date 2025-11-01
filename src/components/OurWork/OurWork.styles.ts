@@ -15,6 +15,9 @@ export const WorkContainerDetails = styled(Box)(({ theme }) => ({
   marginBottom: "20px",
   "& img": {
     width: "100%",
+    height: "250px",
+    objectFit: "contain",
+    backgroundColor: "black",
   },
   "& span": {
     fontSize: "14px",

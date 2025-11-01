@@ -7,7 +7,7 @@ import {
   ProfileDetailsContainer,
 } from "./HomeContainer.styles";
 import ProfileImaage from "../../assets/ProfileImages/ProfileImage.jpeg";
-import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import SocialLinks from "../SocialLinks/SocialLinks";
 
 const HomeContainer = () => {
   return (
@@ -27,15 +27,7 @@ const HomeContainer = () => {
             <br />
             <span className="profile-designation">Founder & Instructor</span>
             <div className="social-icons">
-              <a target="_blank" href="https://www.instagram.com/rahul_snippets/">
-                <FaInstagram size={24} color="#E1306C" />
-              </a>
-              <a target="_blank" href="https://www.linkedin.com/company/pakkacourse/">
-                <FaLinkedin size={24} color="#0A66C2" />
-              </a>
-              <a target="_blank" href="https://www.youtube.com/@pakkacourse">
-                <FaYoutube size={24} color="#FF0000" />
-              </a>
+              <SocialLinks />
             </div>
           </ProfileDetails>
         </ProfileDetailsContainer>

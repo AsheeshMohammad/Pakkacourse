@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
-import { Button, Box, Container } from '@mui/material';
-import { Edit } from '@mui/icons-material';
+import { Button, Box, Container, Modal, Typography, CircularProgress, Backdrop, Tooltip } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { jwtAxios } from '../../utils/axios';
@@ -16,16 +16,28 @@ interface Link {
   link_url: string;
   linktype: string;
   clicks: string;
+  displayorder: number;
+}
+
+interface UserAccessLog {
+  id: number;
+  ip_address: string;
+  user_agent: string;
+  access_time: string;
 }
 
 const AdminHome: React.FC = () => {
   const [links, setLinks] = useState<Link[]>([]);
+  const [userStats, setUserStats] = useState({ totalUsers: 0, uniqueUsers: 0 });
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({ open: false, linkId: 0, linkName: '' });
   const [formData, setFormData] = useState({
     id: 0,
     linkname: '',
     link: '',
-    linktype: 'social'
+    linktype: 'social',
+    displayorder: ''
   });
   const navigate = useNavigate();
 
@@ -33,9 +45,25 @@ const AdminHome: React.FC = () => {
 
   useEffect(() => {
     fetchLinks();
+    fetchUserStats();
   }, []);
 
+  const fetchUserStats = async () => {
+    try {
+      const response = await jwtAxios.get(API_ENDPOINTS.LOGS.GET_ACCESS);
+      if (response.data.success) {
+        setUserStats({
+          totalUsers: response.data.data.totalUsers,
+          uniqueUsers: response.data.data.uniqueUsers
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching user stats:', error);
+    }
+  };
+
   const fetchLinks = async () => {
+    setLoading(true);
     try {
       const response = await jwtAxios.get(`${API_ENDPOINTS.LINKS.GET_LIST}?type=all`);
       if (response.data.success) {
@@ -44,22 +72,26 @@ const AdminHome: React.FC = () => {
     } catch (error) {
       toast.error('Error fetching links');
       console.error('Error fetching links:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await jwtAxios.post(API_ENDPOINTS.LINKS.INSERT_UPDATE, formData);
       if (response.data.success) {
         toast.success(formData.id === 0 ? 'Link added successfully' : 'Link updated successfully');
         setShowModal(false);
-        setFormData({ id: 0, linkname: '', link: '', linktype: 'social' });
+        setFormData({ id: 0, linkname: '', link: '', linktype: 'social', displayorder: '' });
         fetchLinks();
       }
     } catch (error) {
       toast.error('Error saving link');
       console.error('Error saving link:', error);
+      setLoading(false);
     }
   };
 
@@ -68,9 +100,30 @@ const AdminHome: React.FC = () => {
       id: link.link_id,
       linkname: link.link_name,
       link: link.link_url,
-      linktype: link.linktype
+      linktype: link.linktype,
+      displayorder: link.displayorder?.toString() || ''
     });
     setShowModal(true);
+  };
+
+  const handleDelete = (link: Link) => {
+    setDeleteModal({ open: true, linkId: link.link_id, linkName: link.link_name });
+  };
+
+  const confirmDelete = async () => {
+    setLoading(true);
+    try {
+      const response = await jwtAxios.delete(`${API_ENDPOINTS.LINKS.DELETE}/${deleteModal.linkId}`);
+      if (response.data.success) {
+        toast.success('Link deleted successfully');
+        fetchLinks();
+      }
+    } catch (error) {
+      toast.error('Error deleting link');
+      console.error('Error deleting link:', error);
+      setLoading(false);
+    }
+    setDeleteModal({ open: false, linkId: 0, linkName: '' });
   };
 
   const columns = useMemo<MRT_ColumnDef<Link>[]>(
@@ -98,26 +151,40 @@ const AdminHome: React.FC = () => {
         header: 'Clicks',
         size: 100,
       },
+      {
+        accessorKey: 'displayorder',
+        header: 'Order',
+        size: 80,
+      },
     ],
     [],
   );
 
   return (
     <>
-      <Header />
       <Container maxWidth="lg" sx={{ mt: 12, mb: 4 }}>
         <div className="admin-header">
-          <h1>Admin Dashboard</h1>
-          <Button 
+          <h2>Admin Dashboard</h2>
+          <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', mb: 2 }}>
+            <Box sx={{ textAlign: 'center', p: 2, bgcolor: '#f5f5f5', borderRadius: 2 }}>
+              <Typography variant="h4" color="primary">{userStats.totalUsers}</Typography>
+              <Typography variant="body2">Total Visits</Typography>
+            </Box>
+            <Box sx={{ textAlign: 'center', p: 2, bgcolor: '#f5f5f5', borderRadius: 2 }}>
+              <Typography variant="h4" color="primary">{userStats.uniqueUsers}</Typography>
+              <Typography variant="body2">Unique Users</Typography>
+            </Box>
+          </Box>
+         <div> <Button 
             variant="contained" 
             color="primary" 
             onClick={() => {
-              setFormData({ id: 0, linkname: '', link: '', linktype: 'social' });
+              setFormData({ id: 0, linkname: '', link: '', linktype: 'social', displayorder: '' });
               setShowModal(true);
             }}
           >
             Add Link
-          </Button>
+          </Button></div>
         </div>
 
         <MaterialReactTable
@@ -125,6 +192,7 @@ const AdminHome: React.FC = () => {
           data={links}
           enableRowActions
           enableResponsiveTable
+          enableTopToolbar={false}
           muiTableContainerProps={{
             sx: {
               minHeight: '500px',
@@ -141,16 +209,51 @@ const AdminHome: React.FC = () => {
               fontWeight: 'bold',
             },
           }}
+          muiBottomToolbarProps={{
+            sx: {
+              fontSize: '12px',
+              '& .MuiInputLabel-root,.MuiInputBase-input, option,span': {
+                fontSize: '12px',
+              },
+              '& .MuiTablePagination-selectLabel': {
+                fontSize: '12px',
+              },
+              '& .MuiTablePagination-displayedRows': {
+                fontSize: '12px',
+              },
+              '& .MuiBox-root': {
+                display: 'flex',
+              },
+            },
+          }}
           renderRowActions={({ row }) => (
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
-              <Button
-                onClick={() => handleEdit(row.original)}
-                startIcon={<Edit />}
-                variant="outlined"
-                size="small"
-              >
-                Edit
-              </Button>
+            <Box sx={{ display: 'flex', gap: '8px' }}>
+              <Tooltip title="Edit">
+                <Edit
+                  onClick={() => handleEdit(row.original)}
+                  fontSize="small"
+                  sx={{ 
+                    color: '#1976d2',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      color: '#1565c0'
+                    }
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Delete">
+                <Delete
+                  onClick={() => handleDelete(row.original)}
+                  fontSize="small"
+                  sx={{ 
+                    color: '#d32f2f',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      color: '#c62828'
+                    }
+                  }}
+                />
+              </Tooltip>
             </Box>
           )}
         />
@@ -189,6 +292,15 @@ const AdminHome: React.FC = () => {
                   ))}
                 </select>
               </div>
+              <div className="form-group">
+                <label>Display Order</label>
+                <input
+                  type="number"
+                  value={formData.displayorder}
+                  onChange={(e) => setFormData({...formData, displayorder: e.target.value})}
+                  placeholder="Leave empty for auto-order"
+                />
+              </div>
               <div className="modal-actions">
                 <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
                 <button type="submit">Save</button>
@@ -197,7 +309,57 @@ const AdminHome: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        open={deleteModal.open}
+        onClose={() => setDeleteModal({ open: false, linkId: 0, linkName: '' })}
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          borderRadius: 2,
+          boxShadow: 24,
+          p: 4,
+        }}>
+          <Typography variant="h6" component="h2" gutterBottom>
+            Confirm Delete
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 3 }}>
+            Are you sure you want to delete "{deleteModal.linkName}"? This action cannot be undone.
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+            <Button 
+              onClick={() => setDeleteModal({ open: false, linkId: 0, linkName: '' })}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={confirmDelete}
+              variant="contained"
+              color="error"
+            >
+              Delete
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
       </Container>
+      
+      {/* Loading Backdrop */}
+      <Backdrop
+        sx={{ color: '#fff', zIndex: 9999 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      
       <ToastContainer
         position="top-right"
         autoClose={3000}

@@ -9,5 +9,9 @@ export const API_ENDPOINTS = {
     INSERT_UPDATE: '/api/links/InsertUpdate',
     DELETE: '/api/links',
     CLICK_COUNT: '/api/links/ClickCount'
+  },
+  LOGS: {
+    ACCESS: '/api/logs/access',
+    GET_ACCESS: '/api/logs/access'
   }
 };

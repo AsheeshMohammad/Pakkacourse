@@ -20,9 +20,9 @@ export const StyledAppBar = styled(AppBar, {
   boxShadow: elevation && elevation > 0 ? theme.shadows[elevation] : "none",
 }));
 export const StyledAppBarContainer = styled(Box)(({ theme, elevation }) => ({
-  width: "800px",
-  [theme.breakpoints.up("md")]: {
-    maxWidth: "820px",
+  width: "100%",
+  [theme.breakpoints.up("lg")]: {
+    maxWidth: "1200px",
     margin: "auto",
     "& .MuiToolbar-root": {
       paddingLeft: "0 !important",
@@ -30,6 +30,7 @@ export const StyledAppBarContainer = styled(Box)(({ theme, elevation }) => ({
     },
   },
 }));
+
 
 export const LogoTypography = styled(Typography)({
   flexGrow: 1,

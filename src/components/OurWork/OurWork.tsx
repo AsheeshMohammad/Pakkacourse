@@ -1,8 +1,8 @@
 import {
   OurWorkContainer,
-  OurWorkHeader,
   WorkContainerContainer,
 } from "./OurWork.styles";
+import { SectionHeader } from "../../styles/globalStyles";
 import Img1 from "../../assets/ProfileImages/GitamSession1.jpeg";
 import Img2 from "../../assets/ProfileImages/teach1.jpeg";
 import Img3 from "../../assets/ProfileImages/Teach2.jpeg";
@@ -15,19 +15,19 @@ import WorkContainer from "./WorkContainer";
 import { WorkDetailProps } from "../../utils/constants";
 
 const OurWork = () => {
-  const workDetails: WorkDetailProps[] = [
-    { img: Img1, detail: "Project 1 Description" },
-    { img: Img2, detail: "Project 2 Description" },
-    { img: Img3, detail: "Project 3 Description" },
-    { img: Img4, detail: "Project 4 Description" },
-    { img: Img5, detail: "Project 5 Description" },
-    { img: Img6, detail: "Project 6 Description" },
-    { img: Img7, detail: "Project 7 Description" },
-    { img: Img8, detail: "Project 8 Description" },
-  ];
+const workDetails: WorkDetailProps[] = [
+  { img: Img1, detail: "Delivering Career Guidance to Gitam Deemed University students" },
+  { img: Img2, detail: "Leading Initial Physical Classes and hands-on instruction" },
+  { img: Img3, detail: "Pioneering the first sessions of Live Online Teaching" },
+  { img: Img4, detail: "Mentoring Central University Haryana students and sharing professional insights" },
+  { img: Img5, detail: "Fostering Active Student Participation in virtual learning environments" },
+  { img: Img6, detail: "Launching the Coding Competition (setting the stage)" },
+  { img: Img7, detail: "Successfully Managing and concluding the coding competition event" },
+  { img: Img8, detail: "Briefing Participants and clarifying competition rules" },
+];
   return (
     <OurWorkContainer>
-      <OurWorkHeader>Our Work</OurWorkHeader>
+      <SectionHeader>Our Work</SectionHeader>
       <WorkContainerContainer>
         {workDetails.map((workDetail, index) => (
           <WorkContainer

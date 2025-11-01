@@ -105,6 +105,10 @@ router.get('/getList', getLinks);
  *                 type: string
  *                 description: Type/category of the link (e.g., social, resource, documentation)
  *                 example: social
+ *               displayorder:
+ *                 type: integer
+ *                 description: Display order for the link (optional, auto-generated if not provided)
+ *                 example: 1
  *           examples:
  *             insertNewLink:
  *               summary: Insert new link
@@ -113,6 +117,7 @@ router.get('/getList', getLinks);
  *                 linkname: Facebook Page
  *                 link: https://facebook.com/pakkacourse
  *                 linktype: social
+ *                 displayorder: 1
  *             updateExistingLink:
  *               summary: Update existing link
  *               value:
