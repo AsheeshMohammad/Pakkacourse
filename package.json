@@ -14,10 +14,14 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.4",
     "@mui/material": "^7.3.4",
+    "@mui/x-date-pickers": "^8.16.0",
+    "axios": "^1.13.1",
+    "material-react-table": "^3.2.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.4",
+    "react-toastify": "^11.0.5",
     "react-typed": "^2.0.12"
   },
   "devDependencies": {

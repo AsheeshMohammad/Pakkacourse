@@ -58,7 +58,7 @@ const Header = () => {
       <StyledAppBar component="nav" elevation={trigger ? 4 : 0}>
         <StyledAppBarContainer>
         <Toolbar>
-          <LogoTypography variant="h6" component="div">
+          <LogoTypography variant="h6" component="div" onClick={() => window.location.href = '/'} sx={{ cursor: 'pointer' }}>
             <LogoImage src={logo} alt="logo" />
           </LogoTypography>
           {/* <NavItemsBox>
