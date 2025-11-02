@@ -26,7 +26,7 @@ jwtAxios.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/admin';
+      window.location.href = '/#/admin';
     }
     return Promise.reject(error);
   }
