@@ -1,0 +1,14 @@
+{
+    "navigationFallback":{
+        "rewrite":"/index.html",
+        "exclude": ["/api/*"]
+    },
+    "routes": [
+    {
+      "route": "/*",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      }
+    }
+  ]
+}
