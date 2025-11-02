@@ -105,7 +105,7 @@ const Header = () => {
                   ))}
                 </Box>
                 {/* Mobile Hamburger Menu - Hidden on desktop/tablet */}
-                <MenuIconButton
+                {/* <MenuIconButton
                   color="inherit"
                   aria-label="toggle drawer"
                   edge="end"
@@ -120,7 +120,7 @@ const Header = () => {
                   >
                     {mobileOpen ? <CloseIcon /> : <MenuIcon />}
                   </Box>
-                </MenuIconButton>
+                </MenuIconButton> */}
               </>
             )}
           </Toolbar>

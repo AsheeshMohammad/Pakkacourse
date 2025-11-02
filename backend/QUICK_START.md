@@ -19,7 +19,7 @@ Make sure to set:
 - `JWT_SECRET` - A secure random string
 - `SESSION_SECRET` - A secure random string (new)
 - `PORT` - Server port (default: 3001)
-- `CORS_ORIGIN` - Frontend URL (default: https://pakkacourse.onrender.com/)
+- `CORS_ORIGIN` - Frontend URL (default: https://pakkacourse.onrender.com)
 
 ### 3. Start the Server
 
