@@ -61,7 +61,7 @@ PORT=3001
 NODE_ENV=development
 
 # CORS Configuration
-CORS_ORIGIN=http://localhost:5173
+CORS_ORIGIN=https://pakkacourse.onrender.com/
 ```
 
 3. Start the server:
