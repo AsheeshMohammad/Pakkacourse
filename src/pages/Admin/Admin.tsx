@@ -18,7 +18,7 @@ const Admin: React.FC = () => {
     try {
       const data = await authService.login({ username, password });
       if (data.success) {
-        navigate('//#/admin/home');
+        navigate('/#/admin/home');
       } else {
         setError(data.message || 'Login failed');
       }
