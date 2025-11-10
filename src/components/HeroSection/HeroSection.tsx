@@ -17,10 +17,13 @@ const HeroSection = () => {
         backgroundColor: '#f8f9fa',
         minHeight: '60vh',
         display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        gap: 8,
-        px: 4
+        justifyContent: { xs: 'center', md: 'flex-start' },
+        gap: { xs: 4, md: 8 },
+        px: { xs: 2, md: 4 },
+        py: { xs: 4, md: 0 },
+        textAlign: { xs: 'center', md: 'left' }
       }}
     >
       <Box>
@@ -39,7 +42,7 @@ const HeroSection = () => {
         </HomeProfileContainer>
       </Box>
       
-      <Box sx={{ maxWidth: '500px' }}>
+      <Box sx={{ maxWidth: '500px', width: '100%' }}>
         <Typography
           variant="h3"
           sx={{
