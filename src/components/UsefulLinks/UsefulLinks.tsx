@@ -26,11 +26,11 @@ const UsefulLinks: React.FC = () => {
   const [usefulLinks, setUsefulLinks] = useState<UsefulLink[]>([]);
 
   const navigateToTerms = () => {
-    window.location.href = '/#/terms-and-conditions';
+    window.location.href = '/terms-and-conditions';
   };
 
   const navigateToPrivacy = () => {
-    window.location.href = '/#/privacy-policy';
+    window.location.href = '/privacy-policy';
   };
 
   useEffect(() => {

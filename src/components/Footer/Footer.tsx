@@ -12,8 +12,8 @@ import {
 const helpfulLinks = [
   { name: "Links", id: "links" },
   { name: "Work", id: "work" },
-  { name: "Privacy Policy", id: "/#/privacy-policy" },
-  { name: "Terms & Conditions", id: "/#/terms-and-conditions" },
+  { name: "Privacy Policy", id: "/privacy-policy" },
+  { name: "Terms & Conditions", id: "/terms-and-conditions" },
 ];
 
 const Footer = () => {
