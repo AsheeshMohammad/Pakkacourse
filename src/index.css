@@ -1,0 +1,15 @@
+/* Prevent unwanted button overlays */
+button:not([class*="MuiButton"]):not([data-testid]) {
+  display: none !important;
+}
+
+/* Hide any absolute positioned elements that might be overlays */
+*[style*="position: absolute"]:not([class]):not([data-testid]) {
+  display: none !important;
+}
+
+/* Ensure our work section is not affected by external styles */
+.work-section {
+  position: relative;
+  z-index: 1;
+}

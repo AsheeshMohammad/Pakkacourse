@@ -4,16 +4,73 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#2196F3',
+      light: '#64B5F6',
+      dark: '#1976D2',
+      contrastText: '#fff',
     },
     secondary: {
-      main: '#19857b',
+      main: '#FF9800',
+      light: '#FFB74D',
+      dark: '#F57C00',
+      contrastText: '#fff',
     },
     error: {
       main: '#f44336',
     },
     background: {
       default: '#fff',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          borderRadius: '8px',
+          fontWeight: 500,
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            transform: 'translateY(-1px)',
+            boxShadow: '0 4px 12px rgba(33, 150, 243, 0.3)',
+          },
+          '&:active': {
+            transform: 'translateY(0px)',
+            boxShadow: '0 2px 8px rgba(33, 150, 243, 0.4)',
+          },
+        },
+        contained: {
+          '&:hover': {
+            backgroundColor: '#1976D2',
+            transform: 'translateY(-1px)',
+            boxShadow: '0 4px 12px rgba(33, 150, 243, 0.4)',
+          },
+          '&:active': {
+            backgroundColor: '#1565C0',
+            transform: 'translateY(0px)',
+          },
+        },
+        outlined: {
+          '&:hover': {
+            backgroundColor: 'rgba(33, 150, 243, 0.08)',
+            borderColor: '#1976D2',
+            transform: 'translateY(-1px)',
+          },
+          '&:active': {
+            backgroundColor: 'rgba(33, 150, 243, 0.12)',
+            transform: 'translateY(0px)',
+          },
+        },
+        text: {
+          '&:hover': {
+            backgroundColor: 'rgba(33, 150, 243, 0.08)',
+            color: '#1976D2',
+          },
+          '&:active': {
+            backgroundColor: 'rgba(33, 150, 243, 0.12)',
+          },
+        },
+      },
     },
   },
   

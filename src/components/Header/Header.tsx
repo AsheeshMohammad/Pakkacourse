@@ -7,17 +7,16 @@ import {
   ListItemButton,
   ListItemText,
   Toolbar,
+  Typography,
   useScrollTrigger,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import logo from "../../assets/Images/logo.png";
+import logo from './../../assets/Images/logo.png';
 import {
   StyledAppBar,
-  LogoTypography,
-  LogoImage,
   NavItemsBox,
   NavButton,
   MenuIconButton,
@@ -71,39 +70,65 @@ const Header = () => {
 
   return (
     <>
-      <StyledAppBar component="nav" elevation={trigger ? 2 : 0}>
+      <StyledAppBar component="nav" elevation={0} sx={{ backgroundColor: '#fff', borderBottom: '1px solid #e5e7eb' }}>
         <StyledAppBarContainer>
-          <Toolbar>
-            <LogoTypography
-              variant="h6"
-              component="div"
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
+            <img 
+              src={logo} 
+              alt="Business Course Logo" 
               onClick={() => (window.location.href = "/")}
-              sx={{ cursor: "pointer" }}
-            >
-              <LogoImage src={logo} alt="logo" />
-            </LogoTypography>
+              style={{ cursor: "pointer", height: "40px", width: "auto" }}
+            />
             {!isLegalPage && !isAdminPage && (
               <>
-                {/* Desktop/Tablet Menu - Hidden on mobile */}
+                {/* Desktop/Tablet Menu - Centered */}
                 <Box
-                  sx={{ display: { xs: "none", md: "flex" }, gap: 1 }} // Using sx is cleaner than inline props                  gap={1}
+                  sx={{ 
+                    display: { xs: "none", md: "flex" }, 
+                    gap: 3, 
+                    alignItems: 'center',
+                    position: 'absolute',
+                    left: '50%',
+                    transform: 'translateX(-50%)'
+                  }}
                 >
                   {navItems.map((item) => (
                     <Button
                       key={item}
-                      variant="outlined"
+                      variant="text"
                       onClick={() => scrollToSection(item.toLowerCase())}
                       sx={{
-                        fontSize: "12px",
-                        fontWeight: 700,
-                        border: "2px solid #1976d2",
-                        "&:hover": { backgroundColor: "#f5f5f5 !important" },
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        color: '#666',
+                        textTransform: 'none',
+                        position: 'relative',
+                        transition: 'all 0.3s ease',
+                        "&:hover": { 
+                          backgroundColor: 'transparent',
+                          transform: 'translateY(-2px)',
+                          '&::after': {
+                            width: '100%'
+                          }
+                        },
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          bottom: 0,
+                          left: 0,
+                          width: '0%',
+                          height: '2px',
+                          backgroundColor: '#2196F3',
+                          transition: 'width 0.3s ease'
+                        }
                       }}
                     >
                       {item}
                     </Button>
                   ))}
                 </Box>
+                {/* Spacer for layout balance */}
+                <Box sx={{ width: '40px', display: { xs: "none", md: "block" } }} />
                 {/* Mobile Hamburger Menu - Hidden on desktop/tablet */}
                 {/* <MenuIconButton
                   color="inherit"

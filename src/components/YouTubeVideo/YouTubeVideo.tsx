@@ -11,10 +11,10 @@ const YouTubeVideo: React.FC<YouTubeVideoProps> = ({ videoId, title = "YouTube v
     <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
       <Box sx={{ 
         position: 'relative',
-        width: '70%',
+        width: '100%',
         maxWidth: '560px',
         height: 0,
-        paddingBottom: '30.375%', // 16:9 aspect ratio (70% * 56.25%)
+        paddingBottom: '56.25%', // 16:9 aspect ratio
       }}>
         <iframe
           src={`https://www.youtube.com/embed/${videoId}`}

@@ -13,7 +13,11 @@ interface SocialLink {
   displayorder: number;
 }
 
-const SocialLinks: React.FC = () => {
+interface SocialLinksProps {
+  isDark?: boolean;
+}
+
+const SocialLinks: React.FC<SocialLinksProps> = ({ isDark = false }) => {
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
 
   useEffect(() => {
@@ -31,30 +35,31 @@ const SocialLinks: React.FC = () => {
     }
   };
 
-  const getIcon = (linkName: string, linkUrl: string) => {
+  const getIcon = (linkName: string, linkUrl: string, isDark = false) => {
     const name = linkName.toLowerCase();
     const url = linkUrl.toLowerCase();
+    const iconColor = isDark ? '#333' : undefined;
     
     if (name.includes('instagram') || url.includes('instagram')) {
-      return <FaInstagram size={24} color="#E1306C" />;
+      return <FaInstagram size={24} color={iconColor || "#E1306C"} />;
     }
     if (name.includes('linkedin') || url.includes('linkedin')) {
-      return <FaLinkedin size={24} color="#0A66C2" />;
+      return <FaLinkedin size={24} color={iconColor || "#0A66C2"} />;
     }
     if (name.includes('youtube') || url.includes('youtube') || url.includes('youtu.be')) {
-      return <FaYoutube size={24} color="#FF0000" />;
+      return <FaYoutube size={24} color={iconColor || "#FF0000"} />;
     }
     if (name.includes('facebook') || url.includes('facebook')) {
-      return <FaFacebook size={24} color="#1877F2" />;
+      return <FaFacebook size={24} color={iconColor || "#1877F2"} />;
     }
     if (name.includes('twitter') || url.includes('twitter') || url.includes('x.com')) {
-      return <FaTwitter size={24} color="#1DA1F2" />;
+      return <FaTwitter size={24} color={iconColor || "#1DA1F2"} />;
     }
     if (name.includes('github') || url.includes('github')) {
-      return <FaGithub size={24} color="#333" />;
+      return <FaGithub size={24} color={iconColor || "#333"} />;
     }
     
-    return <FaFacebook size={24} color="#1877F2" />; // Default icon
+    return <FaFacebook size={24} color={iconColor || "#1877F2"} />; // Default icon
   };
 
   const handleClick = async (link: SocialLink) => {
@@ -84,7 +89,7 @@ const SocialLinks: React.FC = () => {
               transition: 'all 0.3s ease',
             }}
           >
-            {getIcon(link.link_name, link.link_url)}
+            {getIcon(link.link_name, link.link_url, isDark)}
           </Box>
         ))}
     </Box>

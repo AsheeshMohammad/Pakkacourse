@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
   Container,
-  Grid,
   Card,
   CardContent,
   Box,
   Typography,
 } from "@mui/material";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router-dom";
 import { SectionHeader } from "../../styles/globalStyles";
 import { jwtAxios } from "../../utils/axios";
@@ -21,6 +21,14 @@ interface UsefulLink {
   clicks: string;
   displayorder: number;
 }
+
+const getIcon = () => {
+  return '🔗';
+};
+
+const getIconColor = () => {
+  return '#fff';
+};
 
 const UsefulLinks: React.FC = () => {
   const [usefulLinks, setUsefulLinks] = useState<UsefulLink[]>([]);
@@ -67,54 +75,90 @@ const UsefulLinks: React.FC = () => {
   // }
 
   return (
-    <Box sx={{ py: 2, backgroundColor: "#f5f5f5", mt: 1 }}>
+    <Box sx={{ py: 4, backgroundColor: "#fff" }}>
       <Container maxWidth="lg">
-        <SectionHeader marginTop={"1px !important"} gutterBottom>
-          Useful Links
-        </SectionHeader>
+        <Typography
+          variant="h6"
+          sx={{
+            textAlign: 'center',
+            mb: 3,
+            fontSize: '14px',
+            fontWeight: 400,
+            color: '#666',
+            textTransform: 'uppercase',
+            letterSpacing: '1px'
+          }}
+        >
+          FEATURED LINKS
+        </Typography>
 
-        <Grid spacing={1}>
+        <Box sx={{ maxWidth: '400px', mx: 'auto' }}>
           {usefulLinks
             .sort((a, b) => a.displayorder - b.displayorder)
-            .map((link) => (
-              <Grid item xs={12} key={link.link_id}>
-                <Card
+            .map((link, index) => (
+              <Card
+                key={link.link_id}
+                sx={{
+                  mb: 1.5,
+                  borderRadius: '25px',
+                  border: '1px solid #e8e8e8',
+                  backgroundColor: '#fff',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: 'none',
+                  '&:hover': {
+                    transform: 'translateX(4px)',
+                    borderColor: '#d0d0d0',
+                  },
+                }}
+                onClick={() => handleLinkClick(link)}
+              >
+                <CardContent
                   sx={{
-                    width: "90%",
-                    margin:'auto',
-                    backgroundColor: "#ffffff",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-2px)",
-                      boxShadow: 2,
-                    },
-                    "& .MuiCardContent-root": { padding: "5px !important" },
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    py: 1.5,
+                    px: 2.5,
+                    '&:last-child': { pb: 1.5 },
                   }}
-                  onClick={() => handleLinkClick(link)}
                 >
-                  <CardContent
-                    sx={{
-                      textAlign: "center",
-                      pt: 1,
-                      pb: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography component="span" sx={{ fontWeight: 400 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Box
+                      sx={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: getIconColor(),
+                        border: '1px solid #e0e0e0',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {getIcon()}
+                    </Box>
+                    <Typography
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '15px',
+                        color: '#333',
+                      }}
+                    >
                       {link.link_name}
                     </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+                  </Box>
+                  <ArrowForwardIosIcon
+                    sx={{
+                      fontSize: '14px',
+                      color: '#bbb',
+                    }}
+                  />
+                </CardContent>
+              </Card>
             ))}
-        </Grid>
-        
-        {/* YouTube Videos */}
-        <YouTubeVideo videoId="6HkZKubvDpI" />
-        <YouTubeVideo videoId="U0qBHeNF9I8" />
+        </Box>
       </Container>
     </Box>
   );

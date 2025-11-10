@@ -26,7 +26,7 @@ const workDetails: WorkDetailProps[] = [
   { img: Img8, detail: "Briefing Participants and clarifying competition rules" },
 ];
   return (
-    <OurWorkContainer>
+    <OurWorkContainer className="work-section">
       <SectionHeader>Our Work</SectionHeader>
       <WorkContainerContainer>
         {workDetails.map((workDetail, index) => (
