@@ -153,7 +153,7 @@ const startServer = async () => {
   app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || 'https://pakkacourse.onrender.com'}`);
+    console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || 'http://localhost:5173'}`);
     console.log(`📝 API Documentation: http://localhost:${PORT}/api-docs`);
     console.log(`📄 Swagger JSON: http://localhost:${PORT}/api-docs.json`);
   });

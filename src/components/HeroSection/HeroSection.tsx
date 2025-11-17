@@ -1,8 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import {
-  HomeHeaderHeadLine,
-  HomeHeaderHeadSideLine,
-  HomeHeaderTab,
   HomeProfileContainer,
   ProfileDetails,
   ProfileDetailsContainer,
@@ -17,13 +14,13 @@ const HeroSection = () => {
         backgroundColor: '#f8f9fa',
         minHeight: '60vh',
         display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
+        flexDirection: { xs: 'column', md: 'column' },
         alignItems: 'center',
-        justifyContent: { xs: 'center', md: 'flex-start' },
+        justifyContent: 'center',
         gap: { xs: 4, md: 8 },
         px: { xs: 2, md: 4 },
-        py: { xs: 4, md: 0 },
-        textAlign: { xs: 'center', md: 'left' }
+        py: { xs: 4, md: 8 },
+        textAlign: 'center'
       }}
     >
       <Box>
@@ -43,29 +40,6 @@ const HeroSection = () => {
       </Box>
       
       <Box sx={{ maxWidth: '500px', width: '100%' }}>
-        <Typography
-          variant="h3"
-          sx={{
-            fontSize: { xs: '1.8rem', md: '2.5rem' },
-            fontWeight: 'bold',
-            color: '#333',
-            mb: 2,
-            lineHeight: 1.2
-          }}
-        >
-          Join the Future-Changing Course
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            fontSize: { xs: '1rem', md: '1.2rem' },
-            color: '#666',
-            fontWeight: 400,
-            lineHeight: 1.5
-          }}
-        >
-          Transform your career with cutting-edge skills. Get together with like-minded learners and unlock your potential in today's digital world.
-        </Typography>
       </Box>
     </Box>
   );

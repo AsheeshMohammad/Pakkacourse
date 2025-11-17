@@ -229,7 +229,7 @@ router.post('/InsertUpdate', auth, insertOrUpdateLink);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post('/ClickCount', auth, incrementClicks);
+router.post('/ClickCount', incrementClicks);
 
 /**
  * @swagger

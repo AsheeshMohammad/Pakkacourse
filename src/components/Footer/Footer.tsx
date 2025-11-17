@@ -1,5 +1,5 @@
-import { Container, Grid, Typography, Box, Button } from "@mui/material";
-import logo from "../../assets/Images/logo.png";
+import { Container, Grid, Typography, Box } from "@mui/material";
+import webicon from "../../assets/Images/webicon.png";
 import SocialLinks from "../SocialLinks/SocialLinks";
 
 const Footer = () => {
@@ -21,11 +21,16 @@ const Footer = () => {
         <Grid container spacing={4}>
           {/* Brand Section */}
           <Grid item xs={12} md={3}>
-            <img 
-              src={logo} 
-              alt="Pakka Course Logo" 
-              style={{ height: '40px', width: 'auto', marginBottom: '16px' }}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+              <img 
+                src={webicon} 
+                alt="Pakka Course Icon" 
+                style={{ height: '32px', width: '32px' }}
+              />
+              <Typography sx={{ fontSize: '18px', fontWeight: 700, color: '#1a1a1a' }}>
+                Pakka<span style={{ color: '#ff6b35' }}>Course</span>
+              </Typography>
+            </Box>
             <Typography variant="body2" sx={{ color: '#666', mb: 3, lineHeight: 1.6 }}>
               With seamlessly connect your members with the community, resources, and tools.
             </Typography>

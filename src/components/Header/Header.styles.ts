@@ -58,14 +58,17 @@ export const NavButton = styled(Button)({
 
 export const MenuIconButton = styled(IconButton)(({ theme }) => ({
   color: "#000",
-  [theme.breakpoints.up("sm")]: {
+  padding: "8px",
+  width: "auto",
+  minWidth: "auto",
+  [theme.breakpoints.up("md")]: {
     display: "none",
   },
 }));
 
 export const StyledDrawer = styled(Drawer)(({ theme }) => ({
   display: "block",
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up("md")]: {
     display: "none",
   },
   "& .MuiDrawer-paper": {

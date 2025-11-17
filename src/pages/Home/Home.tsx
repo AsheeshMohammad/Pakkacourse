@@ -1,6 +1,7 @@
 import Footer from "../../components/Footer/Footer";
 import { Box } from "@mui/material";
 import { MainContainer } from "./Home.styles";
+import Banner from "../../components/Banner/Banner";
 import HeroSection from "../../components/HeroSection/HeroSection";
 import MentorSection from "../../components/MentorSection/MentorSection";
 import UsefulLinks from "../../components/UsefulLinks/UsefulLinks";
@@ -9,6 +10,7 @@ import { jwtAxios } from "../../utils/axios";
 import { API_ENDPOINTS } from "../../utils/endpoints";
 
 const Home = () => {
+  const bannerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
@@ -35,7 +37,7 @@ const Home = () => {
       { threshold: 0.1 }
     );
 
-    [heroRef, linksRef, workRef, footerRef].forEach((ref) => {
+    [bannerRef, heroRef, linksRef, workRef, footerRef].forEach((ref) => {
       if (ref.current) observer.observe(ref.current);
     });
 
@@ -46,13 +48,30 @@ const Home = () => {
     <MainContainer>
       <Box mt={8}>
         <Box 
-          ref={heroRef}
+          ref={bannerRef}
           className="fade-in-section"
           sx={{
             '&.fade-in-section': {
               opacity: 0,
               transform: 'translateY(30px)',
               transition: 'all 0.8s ease-out'
+            },
+            '&.fade-in-visible': {
+              opacity: 1,
+              transform: 'translateY(0)'
+            }
+          }}
+        >
+          <Banner />
+        </Box>
+        <Box 
+          ref={heroRef}
+          className="fade-in-section"
+          sx={{
+            '&.fade-in-section': {
+              opacity: 0,
+              transform: 'translateY(30px)',
+              transition: 'all 0.8s ease-out 0.2s'
             },
             '&.fade-in-visible': {
               opacity: 1,

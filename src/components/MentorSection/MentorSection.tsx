@@ -1,4 +1,4 @@
-import { Box, Typography, Card, CardContent, Grid, Modal, IconButton } from "@mui/material";
+import { Box, Typography, Card, Modal, IconButton } from "@mui/material";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -81,119 +81,221 @@ const MentorSection = () => {
       </Box>
       
       <Box sx={{ position: 'relative', maxWidth: '800px', mx: 'auto' }}>
-        <Box
-          sx={{
-            position: 'absolute',
-            left: '50%',
-            top: 0,
-            bottom: 0,
-            width: '2px',
-            backgroundColor: '#ddd',
-            transform: 'translateX(-50%)'
-          }}
-        />
-        {workData.map((work, index) => (
+        {/* Desktop Timeline */}
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Box
-            key={index}
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              mb: 6,
-              flexDirection: index % 2 === 0 ? 'row' : 'row-reverse'
+              position: 'absolute',
+              left: '50%',
+              top: 0,
+              bottom: 0,
+              width: '2px',
+              backgroundColor: '#ddd',
+              transform: 'translateX(-50%)'
             }}
-          >
+          />
+          {workData.map((work, index) => (
             <Box
+              key={index}
               sx={{
-                width: '45%',
-                pr: index % 2 === 0 ? 4 : 0,
-                pl: index % 2 === 0 ? 0 : 4
-              }}
-            >
-              <Card
-                sx={{
-                  backgroundColor: '#fff',
-                  borderRadius: 2,
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                  '&:hover': { boxShadow: '0 4px 16px rgba(0,0,0,0.15)' },
-                  p: 3
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: 'bold', mb: 1, color: '#333' }}
-                >
-                  Work Session {index + 1}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: '#666', mb: 2, fontSize: '12px' }}
-                >
-                  {work.detail}
-                </Typography>
-                <Box
-                  component="img"
-                  src={work.img}
-                  alt={`Work ${index + 1}`}
-                  onClick={() => handleImageClick(index)}
-                  sx={{
-                    width: '60px',
-                    height: '40px',
-                    objectFit: 'cover',
-                    borderRadius: 1,
-                    cursor: 'pointer',
-                    '&:hover': { opacity: 0.8 }
-                  }}
-                />
-              </Card>
-            </Box>
-            
-            <Box
-              sx={{
-                position: 'relative',
-                zIndex: 1
+                display: 'flex',
+                alignItems: 'center',
+                mb: 6,
+                flexDirection: index % 2 === 0 ? 'row' : 'row-reverse'
               }}
             >
               <Box
                 sx={{
-                  width: '12px',
-                  height: '12px',
-                  borderRadius: '50%',
-                  backgroundColor: '#2196F3',
-                  border: '3px solid #fff',
-                  boxShadow: '0 0 0 2px #2196F3'
+                  width: '45%',
+                  pr: index % 2 === 0 ? 4 : 0,
+                  pl: index % 2 === 0 ? 0 : 4
                 }}
-              />
+              >
+                <Card
+                  sx={{
+                    backgroundColor: '#fff',
+                    borderRadius: 2,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    '&:hover': { boxShadow: '0 4px 16px rgba(0,0,0,0.15)' },
+                    p: 3
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 'bold', mb: 1, color: '#333' }}
+                  >
+                    Work Session {index + 1}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: '#666', mb: 2, fontSize: '12px' }}
+                  >
+                    {work.detail}
+                  </Typography>
+                  <Box
+                    component="img"
+                    src={work.img}
+                    alt={`Work ${index + 1}`}
+                    onClick={() => handleImageClick(index)}
+                    sx={{
+                      width: '60px',
+                      height: '40px',
+                      objectFit: 'cover',
+                      borderRadius: 1,
+                      cursor: 'pointer',
+                      '&:hover': { opacity: 0.8 }
+                    }}
+                  />
+                </Card>
+              </Box>
+              
+              <Box
+                sx={{
+                  position: 'relative',
+                  zIndex: 1
+                }}
+              >
+                <Box
+                  sx={{
+                    width: '12px',
+                    height: '12px',
+                    borderRadius: '50%',
+                    backgroundColor: '#2196F3',
+                    border: '3px solid #fff',
+                    boxShadow: '0 0 0 2px #2196F3'
+                  }}
+                />
+              </Box>
+              
+              <Box
+                sx={{
+                  width: '45%',
+                  textAlign: index % 2 === 0 ? 'right' : 'left',
+                  pr: index % 2 === 0 ? 0 : 4,
+                  pl: index % 2 === 0 ? 4 : 0
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{ color: '#999', fontSize: '12px', mb: 1 }}
+                >
+                  Session
+                </Typography>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: 'bold', color: '#333', mb: 1 }}
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: '#999', fontSize: '12px' }}
+                >
+                  2024
+                </Typography>
+              </Box>
             </Box>
-            
+          ))}
+        </Box>
+
+        {/* Mobile Timeline Cards View */}
+        <Box sx={{ display: { xs: 'block', md: 'none' }, position: 'relative', pl: 4 }}>
+          {/* Vertical Line */}
+          <Box
+            sx={{
+              position: 'absolute',
+              left: '12px',
+              top: 0,
+              bottom: 0,
+              width: '2px',
+              backgroundColor: '#ddd'
+            }}
+          />
+          
+          {workData.map((work, index) => (
             <Box
+              key={index}
               sx={{
-                width: '45%',
-                textAlign: index % 2 === 0 ? 'right' : 'left',
-                pr: index % 2 === 0 ? 0 : 4,
-                pl: index % 2 === 0 ? 4 : 0
+                display: 'flex',
+                mb: 4,
+                position: 'relative'
               }}
             >
-              <Typography
-                variant="body2"
-                sx={{ color: '#999', fontSize: '12px', mb: 1 }}
-              >
-                Session
-              </Typography>
-              <Typography
-                variant="h4"
-                sx={{ fontWeight: 'bold', color: '#333', mb: 1 }}
-              >
-                {String(index + 1).padStart(2, '0')}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: '#999', fontSize: '12px' }}
-              >
-                2024
-              </Typography>
+              {/* Timeline Dot */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  left: '-16px',
+                  top: '20px',
+                  width: '26px',
+                  height: '26px',
+                  borderRadius: '50%',
+                  backgroundColor: '#fff',
+                  border: '3px solid #2196F3',
+                  boxShadow: '0 0 0 2px #fff, 0 0 0 4px #2196F3',
+                  zIndex: 2
+                }}
+              />
+              
+              {/* Card Content */}
+              <Box sx={{ flex: 1 }}>
+                <Card
+                  sx={{
+                    backgroundColor: '#fff',
+                    borderRadius: 2,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    '&:hover': { boxShadow: '0 4px 16px rgba(0,0,0,0.15)' },
+                    p: 3,
+                    overflow: 'hidden'
+                  }}
+                >
+                  {/* Session */}
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: '600',
+                      fontSize: '16px',
+                      color: '#2196F3',
+                      mb: 1
+                    }}
+                  >
+                    Session {String(index + 1).padStart(2, '0')} 2024
+                  </Typography>
+                  
+                  {/* Title */}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: '600',
+                      mb: 2,
+                      color: '#333',
+                      fontSize: '15px',
+                      lineHeight: 1.4
+                    }}
+                  >
+                    {work.detail}
+                  </Typography>
+
+                  {/* Image */}
+                  <Box
+                    component="img"
+                    src={work.img}
+                    alt={`Work ${index + 1}`}
+                    onClick={() => handleImageClick(index)}
+                    sx={{
+                      width: '100%',
+                      height: '120px',
+                      objectFit: 'cover',
+                      borderRadius: 1,
+                      cursor: 'pointer',
+                      '&:hover': { opacity: 0.9 }
+                    }}
+                  />
+                </Card>
+              </Box>
             </Box>
-          </Box>
-        ))}
+          ))}
+        </Box>
       </Box>
 
       

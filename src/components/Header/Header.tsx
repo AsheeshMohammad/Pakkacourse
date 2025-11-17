@@ -1,29 +1,25 @@
 import {
   Box,
   Button,
-  Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
   Toolbar,
   Typography,
-  useScrollTrigger,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import logo from './../../assets/Images/logo.png';
+import webicon from './../../assets/Images/webicon.png';
 import {
   StyledAppBar,
-  NavItemsBox,
-  NavButton,
-  MenuIconButton,
   StyledDrawer,
   DrawerContainer,
-  DrawerTitle,
   StyledAppBarContainer,
+  MenuIconButton,
+  drawerWidth,
 } from "./Header.styles";
 
 const navItems = ["Links", "Work"];
@@ -35,13 +31,14 @@ const Header = () => {
     location.pathname === "/terms-and-conditions" ||
     location.pathname === "/privacy-policy";
   const isAdminPage = location.pathname.startsWith("/admin");
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-  });
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+
+  const handleMenuItemClick = (sectionId: string) => {
+    scrollToSection(sectionId);
+    setMobileOpen(false);
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -52,13 +49,13 @@ const Header = () => {
   };
 
   const drawer = (
-    <DrawerContainer onClick={handleDrawerToggle}>
+    <DrawerContainer>
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton
               sx={{ textAlign: "center" }}
-              onClick={() => scrollToSection(item.toLowerCase())}
+              onClick={() => handleMenuItemClick(item.toLowerCase())}
             >
               <ListItemText primary={item} />
             </ListItemButton>
@@ -73,12 +70,18 @@ const Header = () => {
       <StyledAppBar component="nav" elevation={0} sx={{ backgroundColor: '#fff', borderBottom: '1px solid #e5e7eb' }}>
         <StyledAppBarContainer>
           <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <img 
-              src={logo} 
-              alt="Business Course Logo" 
-              onClick={() => (window.location.href = "/")}
-              style={{ cursor: "pointer", height: "40px", width: "auto" }}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }} onClick={() => (window.location.href = "/")}>
+              <img 
+                src={webicon} 
+                alt="Pakka Course Icon" 
+                style={{ height: "30px", width: "30px" }}
+              />
+              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                <Typography sx={{ fontSize: '20px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1 }}>
+                  Pakka<span style={{ color: '#ff6b35' }}>Course</span>
+                </Typography>
+              </Box>
+            </Box>
             {!isLegalPage && !isAdminPage && (
               <>
                 {/* Desktop/Tablet Menu - Centered */}
@@ -104,13 +107,8 @@ const Header = () => {
                         textTransform: 'none',
                         position: 'relative',
                         transition: 'all 0.3s ease',
-                        "&:hover": { 
-                          backgroundColor: 'transparent',
-                          transform: 'translateY(-2px)',
-                          '&::after': {
-                            width: '100%'
-                          }
-                        },
+                        border: 'none',
+                        boxShadow: 'none',
                         '&::after': {
                           content: '""',
                           position: 'absolute',
@@ -120,6 +118,25 @@ const Header = () => {
                           height: '2px',
                           backgroundColor: '#2196F3',
                           transition: 'width 0.3s ease'
+                        },
+                        "&:hover": { 
+                          backgroundColor: 'transparent !important',
+                          color: '#333',
+                          border: 'none',
+                          boxShadow: 'none',
+                          '&::after': {
+                            width: '100%'
+                          }
+                        },
+                        "&:focus": {
+                          backgroundColor: 'transparent !important',
+                          border: 'none',
+                          boxShadow: 'none'
+                        },
+                        "&:active": {
+                          backgroundColor: 'transparent !important',
+                          border: 'none',
+                          boxShadow: 'none'
                         }
                       }}
                     >
@@ -130,7 +147,7 @@ const Header = () => {
                 {/* Spacer for layout balance */}
                 <Box sx={{ width: '40px', display: { xs: "none", md: "block" } }} />
                 {/* Mobile Hamburger Menu - Hidden on desktop/tablet */}
-                {/* <MenuIconButton
+                <MenuIconButton
                   color="inherit"
                   aria-label="toggle drawer"
                   edge="end"
@@ -145,7 +162,7 @@ const Header = () => {
                   >
                     {mobileOpen ? <CloseIcon /> : <MenuIcon />}
                   </Box>
-                </MenuIconButton> */}
+                </MenuIconButton>
               </>
             )}
           </Toolbar>
@@ -159,7 +176,14 @@ const Header = () => {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
+            }}
+            sx={{
+              display: { xs: "block", md: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
             }}
           >
             {drawer}

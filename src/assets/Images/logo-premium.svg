@@ -1,0 +1,110 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradientBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3c72;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a5298;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="gradientText" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="gradientAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff8787;stop-opacity:1" />
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#gradientBg)" filter="url(#glow)"/>
+  
+  <!-- Outer Ring -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="url(#gradientText)" stroke-width="2" opacity="0.5"/>
+
+  <!-- Left Code Bracket -->
+  <g>
+    <path d="M 55 75 L 50 75 L 50 125 L 55 125" 
+          stroke="url(#gradientText)" 
+          stroke-width="3" 
+          fill="none" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+  </g>
+
+  <!-- Right Code Bracket -->
+  <g>
+    <path d="M 145 75 L 150 75 L 150 125 L 145 125" 
+          stroke="url(#gradientAccent)" 
+          stroke-width="3" 
+          fill="none" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+  </g>
+
+  <!-- Central Algorithm Node Structure -->
+  <!-- Top Node -->
+  <circle cx="100" cy="65" r="6" fill="url(#gradientText)"/>
+  
+  <!-- Left Node -->
+  <circle cx="70" cy="95" r="6" fill="url(#gradientText)"/>
+  
+  <!-- Right Node -->
+  <circle cx="130" cy="95" r="6" fill="url(#gradientText)"/>
+  
+  <!-- Bottom Left Node -->
+  <circle cx="80" cy="130" r="6" fill="url(#gradientAccent)"/>
+  
+  <!-- Bottom Right Node -->
+  <circle cx="120" cy="130" r="6" fill="url(#gradientAccent)"/>
+
+  <!-- Center Node (Larger) -->
+  <circle cx="100" cy="100" r="8" fill="url(#gradientText)"/>
+
+  <!-- Connection Lines -->
+  <!-- Top to Center -->
+  <line x1="100" y1="71" x2="100" y2="92" stroke="url(#gradientText)" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Left to Center -->
+  <line x1="76" y1="95" x2="92" y2="100" stroke="url(#gradientText)" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Right to Center -->
+  <line x1="124" y1="95" x2="108" y2="100" stroke="url(#gradientAccent)" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Center to Bottom Left -->
+  <line x1="95" y1="107" x2="85" y2="124" stroke="url(#gradientText)" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Center to Bottom Right -->
+  <line x1="105" y1="107" x2="115" y2="124" stroke="url(#gradientAccent)" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Accent Elements - Arrow pointing up (growth/progress) -->
+  <g transform="translate(100, 155)">
+    <path d="M 0 0 L -5 -8 L 0 -5 L 5 -8 Z" fill="url(#gradientAccent)" opacity="0.8"/>
+    <line x1="0" y1="0" x2="0" y2="-12" stroke="url(#gradientAccent)" stroke-width="1" opacity="0.5"/>
+  </g>
+
+  <!-- Tech Element - Small squares representing data structure -->
+  <rect x="45" y="140" width="4" height="4" fill="url(#gradientText)" opacity="0.6" rx="1"/>
+  <rect x="55" y="145" width="4" height="4" fill="url(#gradientText)" opacity="0.6" rx="1"/>
+  <rect x="145" y="140" width="4" height="4" fill="url(#gradientAccent)" opacity="0.6" rx="1"/>
+  <rect x="155" y="145" width="4" height="4" fill="url(#gradientAccent)" opacity="0.6" rx="1"/>
+
+  <!-- Inner decorative circle -->
+  <circle cx="100" cy="100" r="50" fill="none" stroke="url(#gradientText)" stroke-width="0.5" opacity="0.3" stroke-dasharray="5,5"/>
+
+  <!-- Subtle hexagon pattern element (DSA concept) -->
+  <g opacity="0.15">
+    <polygon points="100,50 110,55 110,65 100,70 90,65 90,55" 
+             fill="none" 
+             stroke="url(#gradientText)" 
+             stroke-width="1"/>
+  </g>
+</svg>
